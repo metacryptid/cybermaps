@@ -20,4 +20,6 @@ When you run it for the first time, cybermaps will generate a `cache` folder as 
 
 - This software is not designed for serious navigation or commercial use. You should not treat its maps as 100% reliable.
 
+- Very low-power computers may experience issues processing map data. This is a fairly resource-intensive application.
+
 
