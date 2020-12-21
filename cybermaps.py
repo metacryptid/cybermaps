@@ -9,6 +9,8 @@ ox.config(log_console=True, use_cache=True, timeout=360)
 w, h = 800,800
 theme = sys.argv[1]
 
+# this will eventually be replaced with a more robust theming system.
+
 if theme == "tron":
     themeColor = "turquoise"
     themeColorTwo = "cyan"
@@ -38,10 +40,9 @@ elif theme == "valentine":
     themeColorTwo = "white"
 
 root = Tk()
-root.title("Map Viewer v3.6")
+root.title("Cybermaps v3.6")
 root.geometry("1920x1080")
 root.configure(bg='black')
-root.iconphoto(True, PhotoImage(file='icon.png'))
 canvas = Canvas(root, bg="black", width = w, height = h)
 canvas.config(highlightbackground=themeColorTwo)
 canvas.place(relx=0.5, rely=0.5, anchor=CENTER)
