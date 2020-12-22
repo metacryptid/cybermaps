@@ -11,6 +11,9 @@ theme = sys.argv[1]
 
 # this will eventually be replaced with a more robust theming system.
 
+if theme == "":
+    themeColor = "red"
+    themeColorTwo = "yellow"
 if theme == "tron":
     themeColor = "turquoise"
     themeColorTwo = "cyan"
@@ -40,22 +43,23 @@ elif theme == "valentine":
     themeColorTwo = "white"
 
 root = Tk()
-root.title("Cybermaps v3.6")
+root.title("Cybermaps v3.7.1")
 root.geometry("1920x1080")
 root.configure(bg='black')
 canvas = Canvas(root, bg="black", width = w, height = h)
 canvas.config(highlightbackground=themeColorTwo)
 canvas.place(relx=0.5, rely=0.5, anchor=CENTER)
 
-def open_image():
-    
+def show_map(location):
     global img
     canvas.delete("all")
-    inputStr = file.get("1.0", "end-1c")
+    if location == "override":
+        inputStr = file.get("1.0", "end-1c")
+    else:
+        inputStr = location
     rangeInt = int(mapRange.get("1.0", "end-1c"))
     areaMDG = ox.graph.graph_from_address(inputStr, dist=rangeInt, dist_type='bbox', network_type='all', simplify=True, retain_all=True, truncate_by_edge=False, return_coords=False, clean_periphery=True, custom_filter=None)
     nodes, edges = ox.utils_graph.graph_to_gdfs(areaMDG, nodes=True, edges=True, node_geometry=True, fill_edge_geometry=True)
-    
     grp = edges.plot(color=themeColor, figsize=(9,9))
     grp.set_facecolor('black')
     plt.tight_layout()
@@ -80,7 +84,7 @@ flabel = Label(root, text = "> LOCATION")
 label.config(font=("Monospace", 14),bg="black", fg=themeColor)
 flabel.config(font =("Monospace", 14),bg="black", fg=themeColor)
 
-fbtn = Button(root, height = 2, width = 20,bg="black", fg=themeColor, text ="Render Map", command = lambda:open_image())
+fbtn = Button(root, height = 2, width = 20,bg="black", fg=themeColor, text ="Render Map", command = lambda:show_map('override'))
 
 fbtn.config(font =("Monospace", 14))
 
@@ -93,7 +97,7 @@ mapRange.config(highlightbackground=themeColorTwo)
 file.place(relx=0.9, rely=0.15, anchor=CENTER)
 label.place(relx=0.1, rely=0.1, anchor=CENTER)
 flabel.place(relx=0.9, rely=0.1, anchor=CENTER)
-fbtn.place(relx=0.5, rely=0.05, anchor=CENTER)
+fbtn.place(relx=0.9, rely=0.2, anchor=CENTER)
 mapRange.place(relx=0.1, rely=0.15, anchor=CENTER)
 
 mainloop()
