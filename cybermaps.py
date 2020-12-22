@@ -7,13 +7,13 @@ import sys
 ox.config(log_console=True, use_cache=True, timeout=360)
 
 w, h = 800,800
-theme = sys.argv[1]
+if sys.argv[1]:
+    theme = sys.argv[1]
+else:
+    theme = 'punk'
 
 # this will eventually be replaced with a more robust theming system.
 
-if theme == "":
-    themeColor = "red"
-    themeColorTwo = "yellow"
 if theme == "tron":
     themeColor = "turquoise"
     themeColorTwo = "cyan"
