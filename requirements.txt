@@ -1,0 +1,5 @@
+###### Project Requirements (those included in standard Python installations are not shown) ######
+
+Pillow
+osmnx
+matplotlib
