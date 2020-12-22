@@ -43,7 +43,7 @@ elif theme == "valentine":
     themeColorTwo = "white"
 
 root = Tk()
-root.title("Cybermaps v3.7.3")
+root.title("Cybermaps v3.7.4")
 root.geometry("1920x1080")
 root.configure(bg='black')
 canvas = Canvas(root, bg="black", width = w, height = h)
