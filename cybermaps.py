@@ -7,7 +7,7 @@ import sys
 ox.config(log_console=True, use_cache=True, timeout=360)
 
 w, h = 800,800
-if sys.argv[1]:
+if 0 <= 1 < len(sys.argv):
     theme = sys.argv[1]
 else:
     theme = 'punk'
@@ -43,7 +43,7 @@ elif theme == "valentine":
     themeColorTwo = "white"
 
 root = Tk()
-root.title("Cybermaps v3.7.1")
+root.title("Cybermaps v3.7.3")
 root.geometry("1920x1080")
 root.configure(bg='black')
 canvas = Canvas(root, bg="black", width = w, height = h)
