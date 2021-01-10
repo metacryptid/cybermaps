@@ -36,3 +36,4 @@ List of valid themes:
 - wick
 - martian
 - valentine
+- gilded
