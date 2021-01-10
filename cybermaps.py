@@ -9,6 +9,7 @@ import sys
 ox.config(log_console=True, use_cache=True, timeout=360)
 
 w, h = 800,800
+
 if 0 <= 1 < len(sys.argv):
     theme = sys.argv[1]
 else:
@@ -43,9 +44,12 @@ elif theme == "martian":
 elif theme == "valentine":
     themeColor = "pink"
     themeColorTwo = "white"
+elif theme == "gilded":
+    themeColor = "yellow"
+    themeColorTwo = "blue"
 
 root = Tk()
-root.title("Cybermaps v3.8.4")
+root.title("Cybermaps v3.8.6")
 root.geometry("1920x1080")
 root.configure(bg='black')
 
@@ -87,28 +91,18 @@ def show_map(location):
     progress['value'] = 100
     root.update_idletasks()
     
-file = Text(root, height = 1, width = 20,bg="black",fg=themeColor)
-mapRange = Text(root, height = 1, width = 20,bg="black",fg=themeColor)
-canvas = Canvas(root, bg="black", width = w, height = h)
-label = Label(root, text = "> RANGE [METERS]")
-flabel = Label(root, text = "> LOCATION")
-label.config(font=("Monospace", 14),bg="black", fg=themeColor)
-flabel.config(font =("Monospace", 14),bg="black", fg=themeColor)
-fbtn = Button(root, height = 2, width = 20,bg="black", fg=themeColor, text ="Render Map", command = lambda:show_map('override'))
-fbtn.config(font =("Monospace", 14))
+file = Text(root, height = 1, width = 20,bg="black",fg=themeColor,highlightbackground=themeColorTwo)
+mapRange = Text(root, height = 1, width = 20,bg="black",fg=themeColor,highlightbackground=themeColorTwo)
+canvas = Canvas(root, bg="black", width = w, height = h,highlightbackground=themeColorTwo)
+label = Label(root, text = "> RANGE [METERS]",font=("Monospace", 14),bg="black", fg=themeColor,highlightbackground=themeColorTwo)
+flabel = Label(root, text = "> LOCATION",font =("Monospace", 14),bg="black", fg=themeColor,highlightbackground=themeColorTwo)
+fbtn = Button(root, height = 2, width = 20,bg="black", fg=themeColor, text ="Render Map", command = lambda:show_map('override'),activebackground=themeColorTwo,font =("Monospace", 14),highlightbackground=themeColorTwo)
 
 s = ttk.Style()
 s.theme_use('default')
 s.configure("black.Horizontal.TProgressbar", background=themeColor, highlightbackground=themeColorTwo)
 
 progress = Progressbar(root, orient = HORIZONTAL,length = 200, mode = 'determinate', s = 'black.Horizontal.TProgressbar')
-
-file.config(highlightbackground=themeColorTwo)
-label.config(highlightbackground=themeColorTwo)
-flabel.config(highlightbackground=themeColorTwo)
-fbtn.config(highlightbackground=themeColorTwo)
-mapRange.config(highlightbackground=themeColorTwo)
-canvas.config(highlightbackground=themeColorTwo)
 
 file.place(relx=0.9, rely=0.15, anchor=CENTER)
 label.place(relx=0.1, rely=0.1, anchor=CENTER)
