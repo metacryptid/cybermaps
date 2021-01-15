@@ -10,101 +10,90 @@ ox.config(log_console=True, use_cache=True, timeout=360)
 
 w, h = 800,800
 
+themes = {
+'tron': ("turquoise", "cyan"),
+'blade': ("yellow", "orange"),
+'punk': ("red", "yellow"),
+'neon': ("magenta", "turquoise"),
+'matrix': ("lime", "green"),
+'wick': ("cyan", "red"),
+'martian': ("red", "orange"),
+'valentine': ("pink", "white"),
+'gilded': ("yellow", "blue")
+}
+
 if 0 <= 1 < len(sys.argv):
-    theme = sys.argv[1]
+    theme = themes[sys.argv[1]]
 else:
-    theme = 'punk'
-
-# this will eventually be replaced with a more robust theming system.
-
-if theme == "tron":
-    themeColor = "turquoise"
-    themeColorTwo = "cyan"
-elif theme == "blade":
-    themeColor = "yellow"
-    themeColorTwo = "orange"
-elif theme == "punk":
-    themeColor = "red"
-    themeColorTwo = "yellow"
-elif theme == "spice":
-    themeColor = "orange"
-    themeColorTwo = "orange"
-elif theme == "neon":
-    themeColor = "magenta"
-    themeColorTwo = "turquoise"
-elif theme == "matrix":
-    themeColor = "lime"
-    themeColorTwo = "green"
-elif theme == "wick":
-    themeColor = "cyan"
-    themeColorTwo = "red"
-elif theme == "martian":
-    themeColor = "red"
-    themeColorTwo = "orange"
-elif theme == "valentine":
-    themeColor = "pink"
-    themeColorTwo = "white"
-elif theme == "gilded":
-    themeColor = "yellow"
-    themeColorTwo = "blue"
+    theme = themes['punk']
 
 root = Tk()
 root.title("Cybermaps v3.8.6")
 root.geometry("1920x1080")
 root.configure(bg='black')
 
-def show_map(location):
+def show_map():
     global img
     canvas.delete("all")
-    if location == "override":
-        inputStr = file.get("1.0", "end-1c")
-    else:
-        inputStr = location
+    inputStr = file.get("1.0", "end-1c")
     rangeInt = int(mapRange.get("1.0", "end-1c"))
+    
     progress['value'] = 20
     root.update_idletasks()
+    
     areaMDG = ox.graph.graph_from_address(inputStr, dist=rangeInt, dist_type='bbox', network_type='all', simplify=True, retain_all=True, truncate_by_edge=False, return_coords=False, clean_periphery=True, custom_filter=None)
+    
     progress['value'] = 50
     root.update_idletasks()
+    
     nodes, edges = ox.utils_graph.graph_to_gdfs(areaMDG, nodes=True, edges=True, node_geometry=True, fill_edge_geometry=True)
+    
     progress['value'] = 60
     root.update_idletasks()
-    grp = edges.plot(color=themeColor, figsize=(9,9))
+    
+    grp = edges.plot(color=theme[0], figsize=(9,9))
+    
     progress['value'] = 70
     root.update_idletasks()
+    
     grp.set_facecolor('black')
     plt.tight_layout()
-    grp.spines['bottom'].set_color(themeColor)
-    grp.spines['left'].set_color(themeColor)
+    grp.spines['bottom'].set_color(theme[0])
+    grp.spines['left'].set_color(theme[0])
+    
     progress['value'] = 75
     root.update_idletasks()
-    grp.tick_params(axis='x', colors=themeColorTwo)
-    grp.tick_params(axis='y', colors=themeColorTwo)
+    
+    grp.tick_params(axis='x', colors=theme[1])
+    grp.tick_params(axis='y', colors=theme[1])
     plt.savefig('tmpImg.png', facecolor=grp.get_facecolor(), bbox_inches=0)
+    
     progress['value'] = 90
     root.update_idletasks()
+    
     im = Image.open("tmpImg.png")
     w,h = im.size
     canvas.config(width=w, height=h)
     img = ImageTk.PhotoImage(im)
     canvas.create_image(w/2,h/2, anchor=CENTER, image=img)
+    
     progress['value'] = 100
     root.update_idletasks()
     
-file = Text(root, height = 1, width = 20,bg="black",fg=themeColor,highlightbackground=themeColorTwo)
-mapRange = Text(root, height = 1, width = 20,bg="black",fg=themeColor,highlightbackground=themeColorTwo)
-canvas = Canvas(root, bg="black", width = w, height = h,highlightbackground=themeColorTwo)
-label = Label(root, text = "> RANGE [METERS]",font=("Monospace", 14),bg="black", fg=themeColor,highlightbackground=themeColorTwo)
-flabel = Label(root, text = "> LOCATION",font =("Monospace", 14),bg="black", fg=themeColor,highlightbackground=themeColorTwo)
-fbtn = Button(root, height = 2, width = 20,bg="black", fg=themeColor, text ="Render Map", command = lambda:show_map('override'),activebackground=themeColorTwo,font =("Monospace", 14),highlightbackground=themeColorTwo)
+location = Text(root, height = 1, width = 20,bg="black",fg=theme[0],highlightbackground=theme[1])
+mapRange = Text(root, height = 1, width = 20,bg="black",fg=theme[0],highlightbackground=theme[1])
+canvas = Canvas(root, bg="black", width = w, height = h,highlightbackground=theme[1])
+label = Label(root, text = "> RANGE [METERS]",font=("Monospace", 14),bg="black", fg=theme[0],highlightbackground=theme[1])
+flabel = Label(root, text = "> LOCATION",font =("Monospace", 14),bg="black", fg=theme[0],highlightbackground=theme[1])
+fbtn = Button(root, height = 2, width = 20,bg="black", fg=theme[0], text ="Render Map", command = lambda:show_map(),activebackground=theme[1],font =("Monospace", 14),highlightbackground=theme[1])
 
 s = ttk.Style()
 s.theme_use('default')
-s.configure("black.Horizontal.TProgressbar", background=themeColor, highlightbackground=themeColorTwo)
+s.configure("black.Horizontal.TProgressbar", background=theme[0], highlightbackground=theme[1])
 
 progress = Progressbar(root, orient = HORIZONTAL,length = 200, mode = 'determinate', s = 'black.Horizontal.TProgressbar')
 
-file.place(relx=0.9, rely=0.15, anchor=CENTER)
+location.place(relx=0.9, rely=0.15, anchor=CENTER)
 label.place(relx=0.1, rely=0.1, anchor=CENTER)
 flabel.place(relx=0.9, rely=0.1, anchor=CENTER)
 fbtn.place(relx=0.9, rely=0.2, anchor=CENTER)
