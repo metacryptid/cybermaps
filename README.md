@@ -30,7 +30,6 @@ List of valid themes:
 - tron
 - blade
 - punk
-- spice
 - neon
 - matrix
 - wick
