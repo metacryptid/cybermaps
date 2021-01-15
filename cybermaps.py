@@ -28,7 +28,7 @@ else:
     theme = themes['punk']
 
 root = Tk()
-root.title("Cybermaps v3.8.6")
+root.title("Cybermaps v3.8.7")
 root.geometry("1920x1080")
 root.configure(bg='black')
 
