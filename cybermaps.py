@@ -35,7 +35,7 @@ root.configure(bg='black')
 def show_map():
     global img
     canvas.delete("all")
-    inputStr = file.get("1.0", "end-1c")
+    inputStr = location.get("1.0", "end-1c")
     rangeInt = int(mapRange.get("1.0", "end-1c"))
     
     progress['value'] = 20
